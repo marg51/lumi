@@ -1,4 +1,35 @@
-curl http://localhost:7778/any -H "content-type: application/json" -d '{"message": "hey"}'
+curl http://localhost:7778/any -H "content-type: application/json" -d '{
+    "message": "coucou slack",
+    "slack_attachments": [
+        {
+            "fallback": "Required plain-text summary of the attachment.",
+            "color": "#36a64f",
+            "pretext": "Optional text that appears above the attachment block",
+            "author_name": "Bobby Tables",
+            "author_link": "http://flickr.com/bobby/",
+            "author_icon": "http://flickr.com/icons/bobby.jpg",
+            "title": "Slack API Documentation",
+            "title_link": "https://api.slack.com/",
+            "text": "Optional text that appears within the attachment",
+            "fields": [
+                {
+                    "title": "Priority",
+                    "value": "High",
+                    "short": false
+                }
+            ],
+            "image_url": "http://my-website.com/path/to/image.jpg",
+            "thumb_url": "http://example.com/path/to/thumb.png",
+            "footer": "Slack API",
+            "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+            "ts": 123456789
+        }
+    ]
+}'
+exit
+
+curl http://localhost:7778/travis -XPOST -d "%7B%22id%22%3A243255223%2C%22repository%22%3A%7B%22id%22%3A1771959%2C%22name%22%3A%22docs-travis-ci-com%22%2C%22owner_name%22%3A%22travis-ci%22%2C%22url%22%3A%22http%3A%2F%2Fdocs.travis-ci.com%22%7D%2C%22number%22%3A%222108%22%2C%22config%22%3A%7B%22sudo%22%3Afalse%2C%22dist%22%3A%22trusty%22%2C%22language%22%3A%22python%22%2C%22python%22%3A%5B%223.5.2%22%5D%2C%22branches%22%3A%7B%22only%22%3A%5B%22master%22%5D%7D%2C%22cache%22%3A%7B%22pip%22%3Atrue%2C%22directories%22%3A%5B%22vendor%2Fbundle%22%2C%22node_modules%22%5D%7D%2C%22deploy%22%3A%7B%22provider%22%3A%22heroku%22%2C%22api_key%22%3A%7B%22secure%22%3A%22hylw2GIHMvZKOKX3uPSaLEzVrUGEA9mzGEA0s4zK37W9HJCTnvAcmgRCwOkRuC4L7R4Zshdh%2FCGORNnBBgh1xx5JGYwkdnqtjHuUQmWEXCusrIURu%2FiEBNSsZZEPK7zBuwqMHj2yRm64JfbTDJsku3xdoA5Z8XJG5AMJGKLFgUQ%3D%22%7D%2C%22app%22%3A%22docs-travis-ci-com%22%2C%22skip_cleanup%22%3Atrue%2C%22true%22%3A%7B%22branch%22%3A%5B%22master%22%5D%7D%7D%2C%22notifications%22%3A%7B%22slack%22%3A%7B%22rooms%22%3A%7B%22secure%22%3A%22LPNgf0Ra6Vu6I7XuK7tcnyFWJg%2Bbecx1RfAR35feWK81sru8TyuldQIt7uAKMA8tqFTP8j1Af7iz7UDokbCCfDNCX1GxdAWgXs%2BUKpwhO89nsidHAsCkW2lWSEM0E3xtOJDyNFoauiHxBKGKUsApJTnf39H%2BEW9tWrqN5W2sZg8%3D%22%7D%2C%22on_success%22%3A%22never%22%7D%2C%22webhooks%22%3A%22https%3A%2F%2Fdocs.travis-ci.com%2Fupdate_webhook_payload_doc%22%7D%2C%22install%22%3A%5B%22bundle%20install%20--deployment%22%5D%2C%22before_script%22%3A%5B%22rvm%20use%202.3.1%20--install%22%5D%2C%22script%22%3A%5B%22bundle%20exec%20rake%20test%22%5D%2C%22.result%22%3A%22configured%22%2C%22global_env%22%3A%5B%22PATH%3D%24HOME%2F.local%2Fuser%2Fbin%3A%24PATH%22%5D%2C%22group%22%3A%22stable%22%7D%2C%22status%22%3A1%2C%22result%22%3A0%2C%22status_message%22%3A%22Passed%22%2C%22result_message%22%3A%22Passed%22%2C%22started_at%22%3A%222017-06-15T13%3A06%3A14Z%22%2C%22finished_at%22%3A%222017-06-15T13%3A08%3A05Z%22%2C%22duration%22%3A111%2C%22build_url%22%3A%22https%3A%2F%2Ftravis-ci.org%2Ftravis-ci%2Fdocs-travis-ci-com%2Fbuilds%2F243255223%22%2C%22commit_id%22%3A70574660%2C%22commit%22%3A%2245c257653b878cee4b1a08119d14fb9f4ac1dc3f%22%2C%22base_commit%22%3A%22d8afd36735d6689cc81876af627c951ac37ff7fe%22%2C%22head_commit%22%3A%22d73af2ed165e67159ab4d016260f3ff0c6bc7469%22%2C%22branch%22%3A%22master%22%2C%22message%22%3A%22Added%20Docker%20APT%20repo%20URLs%22%2C%22compare_url%22%3A%22https%3A%2F%2Fgithub.com%2Ftravis-ci%2Fdocs-travis-ci-com%2Fpull%2F1259%22%2C%22committed_at%22%3A%222017-06-15T13%3A05%3A48Z%22%2C%22author_name%22%3A%22Dominic%20Jodoin%22%2C%22author_email%22%3A%22dominic%40travis-ci.com%22%2C%22committer_name%22%3A%22GitHub%22%2C%22committer_email%22%3A%22noreply%40github.com%22%2C%22matrix%22%3A%5B%7B%22id%22%3A243255224%2C%22repository_id%22%3A1771959%2C%22parent_id%22%3A243255223%2C%22number%22%3A%222108.1%22%2C%22state%22%3A%22finished%22%2C%22config%22%3A%7B%22sudo%22%3Afalse%2C%22dist%22%3A%22trusty%22%2C%22language%22%3A%22python%22%2C%22python%22%3A%223.5.2%22%2C%22branches%22%3A%7B%22only%22%3A%5B%22master%22%5D%7D%2C%22cache%22%3A%7B%22pip%22%3Atrue%2C%22directories%22%3A%5B%22vendor%2Fbundle%22%2C%22node_modules%22%5D%7D%2C%22notifications%22%3A%7B%22slack%22%3A%7B%22rooms%22%3A%7B%22secure%22%3A%22LPNgf0Ra6Vu6I7XuK7tcnyFWJg%2Bbecx1RfAR35feWK81sru8TyuldQIt7uAKMA8tqFTP8j1Af7iz7UDokbCCfDNCX1GxdAWgXs%2BUKpwhO89nsidHAsCkW2lWSEM0E3xtOJDyNFoauiHxBKGKUsApJTnf39H%2BEW9tWrqN5W2sZg8%3D%22%7D%2C%22on_success%22%3A%22never%22%7D%2C%22webhooks%22%3A%22https%3A%2F%2Fdocs.travis-ci.com%2Fupdate_webhook_payload_doc%22%7D%2C%22install%22%3A%5B%22bundle%20install%20--deployment%22%5D%2C%22before_script%22%3A%5B%22rvm%20use%202.3.1%20--install%22%5D%2C%22script%22%3A%5B%22bundle%20exec%20rake%20test%22%5D%2C%22.result%22%3A%22configured%22%2C%22global_env%22%3A%5B%22PATH%3D%24HOME%2F.local%2Fuser%2Fbin%3A%24PATH%22%5D%2C%22group%22%3A%22stable%22%2C%22os%22%3A%22linux%22%2C%22addons%22%3A%7B%22deploy%22%3A%7B%22provider%22%3A%22heroku%22%2C%22api_key%22%3A%7B%22secure%22%3A%22hylw2GIHMvZKOKX3uPSaLEzVrUGEA9mzGEA0s4zK37W9HJCTnvAcmgRCwOkRuC4L7R4Zshdh%2FCGORNnBBgh1xx5JGYwkdnqtjHuUQmWEXCusrIURu%2FiEBNSsZZEPK7zBuwqMHj2yRm64JfbTDJsku3xdoA5Z8XJG5AMJGKLFgUQ%3D%22%7D%2C%22app%22%3A%22docs-travis-ci-com%22%2C%22skip_cleanup%22%3Atrue%2C%22true%22%3A%7B%22branch%22%3A%5B%22master%22%5D%7D%7D%7D%7D%2C%22status%22%3A0%2C%22result%22%3A0%2C%22commit%22%3A%2245c257653b878cee4b1a08119d14fb9f4ac1dc3f%22%2C%22branch%22%3A%22master%22%2C%22message%22%3A%22Added%20Docker%20APT%20repo%20URLs%22%2C%22compare_url%22%3A%22https%3A%2F%2Fgithub.com%2Ftravis-ci%2Fdocs-travis-ci-com%2Fpull%2F1259%22%2C%22started_at%22%3A%222017-06-15T13%3A06%3A14Z%22%2C%22finished_at%22%3A%222017-06-15T13%3A08%3A05Z%22%2C%22committed_at%22%3A%222017-06-15T13%3A05%3A48Z%22%2C%22author_name%22%3A%22Dominic%20Jodoin%22%2C%22author_email%22%3A%22dominic%40travis-ci.com%22%2C%22committer_name%22%3A%22GitHub%22%2C%22committer_email%22%3A%22noreply%40github.com%22%2C%22allow_failure%22%3Afalse%7D%5D%2C%22type%22%3A%22pull_request%22%2C%22state%22%3A%22passed%22%2C%22pull_request%22%3Atrue%2C%22pull_request_number%22%3A1259%2C%22pull_request_title%22%3A%22Added%20Docker%20APT%20repo%20URLs%22%2C%22tag%22%3Anull%7D"
+
 exit
 curl http://localhost:7778/github -H "content-type: application/json" -H "X-GitHub-Event: push" -d '{
   "ref": "refs/heads/master",

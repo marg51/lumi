@@ -22,6 +22,7 @@ module.exports = {
         sendMessage(
             {
                 text: compiled_template(ingredients),
+                attachments: ingredients.slack_attachments,
                 channel,
                 token,
             },
