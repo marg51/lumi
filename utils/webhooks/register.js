@@ -5,6 +5,9 @@ const { server } = require("./index")
 const decorateApplet = require("./decorateApplet")
 const handleQuery = require("./handleQuery")
 
+const registerPubsubhubbub = require("./register_pubsubhubbub")
+const registerCrc = require("./register_crc")
+
 const endpoints = {
     get: {},
     post: {},
@@ -15,7 +18,12 @@ const endpoints = {
 module.exports = applet => {
     applet = decorateApplet(applet)
 
-    const { method, url } = applet.config.webhook
+    const {
+        method,
+        url,
+        pubsubhubbub_validation_config,
+        crc_validation_config,
+    } = applet.config.webhook
 
     const method_lc = method.toLowerCase()
 
@@ -24,6 +32,18 @@ module.exports = applet => {
         endpoints[method_lc][url] = callbacks
 
         registerEndpoint(method_lc, url, callbacks)
+
+        if (pubsubhubbub_validation_config) {
+            registerPubsubhubbub(
+                server,
+                method_lc,
+                url,
+                pubsubhubbub_validation_config
+            )
+        }
+        if (crc_validation_config) {
+            registerCrc(server, method_lc, url, crc_validation_config)
+        }
     }
 
     logger.log("registering new webhook applet at", method, url)
@@ -37,10 +57,13 @@ function registerEndpoint(method, url, callbacks) {
         server[method](url, (...args) => {
             logger.log("received new query", method, url)
 
-            // res.send()
-            args[1].send({ ok: true })
+            const response = callbacks.reduce(
+                (state, cb) => cb(...args) || state,
+                { ok: true }
+            )
 
-            callbacks.map(cb => cb(...args))
+            // this is calling res.send()
+            args[1].send(response)
         })
     } catch (e) {
         logger.error(e.message)

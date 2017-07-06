@@ -3,7 +3,6 @@ module.exports = {
     type: "webhook", // "action"
     service: "github",
     name: "New Issue",
-    ingredients: ["number"],
     extract_ingredients: ({ body }) => {
         return body
     },
