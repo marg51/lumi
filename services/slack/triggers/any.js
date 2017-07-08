@@ -1,3 +1,5 @@
+const match = require("../../../utils/match")
+
 module.exports = {
     id: "slack:all-events",
     type: "webhook", // "action"
@@ -6,5 +8,7 @@ module.exports = {
     extract_ingredients: ({ body }) => {
         return body
     },
-    webhook_config: {},
+    webhook_config: {
+        _filters: ({ body, config }) => match(body, config),
+    },
 }

@@ -1,3 +1,5 @@
+const match = require("../../../utils/match")
+
 module.exports = {
     id: "travis:build-successful",
     type: "webhook", // "action"
@@ -8,9 +10,6 @@ module.exports = {
         return body
     },
     webhook_config: {
-        _filters: [
-            ({ body, config = { repo: "" } }) =>
-                body.repository.name.indexOf(config.repo) >= 0,
-        ],
+        _filters: [({ body, config }) => match(body, config)],
     },
 }

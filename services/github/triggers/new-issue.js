@@ -1,3 +1,5 @@
+const match = require("../../../utils/match")
+
 module.exports = {
     id: "github:issue-opened",
     type: "webhook", // "action"
@@ -11,7 +13,7 @@ module.exports = {
             ({ headers, body, config = { repo: "" } }) =>
                 headers["x-github-event"] === "issues" &&
                 body.action == "opened" &&
-                body.repository.full_name.indexOf(config.repo) >= 0,
+                match(body, config),
         ],
     },
 }

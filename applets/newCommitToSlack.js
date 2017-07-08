@@ -9,8 +9,20 @@ module.exports = {
     actions: [SlackMessageAction, PushNotificationAction],
     config: {
         [NewPushTrigger.id]: {
-            repo: "networklocum/bart",
-            branch: "master",
+            repository: {
+                full_name: "networklocum/bart"
+            },
+            head_commit: {
+                committer: {
+                    $exclude: ["marg51"]
+                },
+                modified: {
+                    $contains: [
+                        /^src\/shared/
+                    ]
+                }
+            },
+            ref: "refs/heads/master",
         },
         [SlackMessageAction.id]: {
             template: "new commit #<%=head_commit.message%> has been pushed to <%=repository.full_name%> by <%=head_commit.author.username%>",

@@ -7,6 +7,11 @@ module.exports = {
     trigger: OnBuildTrigger,
     actions: [SlackMessageAction],
     config: {
+        [OnBuildTrigger.id]: {
+            repository: {
+                name: "networklocum/nginx-service",
+            },
+        },
         [SlackMessageAction.id]: {
             template: 'a new build has just finished on <%=repository.name%>, "<%=message%>"(<%=committer_name%>)',
             channel: "G0YDU2X47",
