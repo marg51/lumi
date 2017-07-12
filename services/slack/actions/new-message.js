@@ -12,21 +12,29 @@ module.exports = {
     requires: [],
     isValid: () => true,
     hooks: {
-        pre() {},
-        post() {},
+        pre() { },
+        post() { },
     },
-    exec(applet, ingredients, config = { token, channel, template }) {
+    exec(applet, ingredients, config, context) {
         const { channel, token } = config
-        const compiled_template = createTemplate(config.template)
+        const compiled_template = createTemplate(parseParam(config.template, { applet, ingredients, config, context }))
 
         sendMessage(
             {
                 text: compiled_template(ingredients),
                 attachments: ingredients.slack_attachments,
-                channel,
+                channel: parseParam(channel, { applet, ingredients, config, context }),
                 token,
             },
-            () => {}
+            () => { }
         )
     },
+}
+
+function parseParam(value, { applet, ingredients, config, context }) {
+    if (typeof value == "function") {
+        return value({ applet, ingredients, config, context })
+    }
+
+    return value
 }

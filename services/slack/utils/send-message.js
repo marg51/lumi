@@ -14,7 +14,8 @@ function createMessage({ token, channel, text, attachments }, next) {
     slack.chat.postMessage(
         { token, channel, text, attachments },
         (err, data) => {
-            if (err) console.log(err)
+            if (err)
+                return console.log(err)
 
             next(data.ts)
         }
