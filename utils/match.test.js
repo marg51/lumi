@@ -25,6 +25,8 @@ describe("match", () => {
 
     it("should fail containing special syntax $in", () =>
         expect(match({ a: "not" }, { a: { $in: ["eh", "haha"] } })).toBe(false))
+    it("should validate containing special syntax $in with regex", () =>
+        expect(match({ a: "blaeha" }, { a: { $in: [/eh/, "haha"] } })).toBe(true))
 
     it("should validate containing special syntax $exclude", () =>
         expect(match({ a: "haha" }, { a: { $exclude: ["eh", "haha"] } })).toBe(
@@ -44,5 +46,13 @@ describe("match", () => {
     it("should validate containing special syntax $contains with regex", () =>
         expect(match({ a: ["bebe", "haha"] }, { a: { $contains: [/a/] } })).toBe(
             true
+        ))
+    it("should validate $defined", () =>
+        expect(match({ a: "1" }, { a: { $defined: true } })).toBe(
+            true
+        ))
+    it("should fail $defined", () =>
+        expect(match({ a: "1" }, { b: { $defined: true } })).toBe(
+            false
         ))
 })

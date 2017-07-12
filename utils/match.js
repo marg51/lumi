@@ -18,6 +18,7 @@ function check(object1, object2) {
 }
 
 function getType(value) {
+    if (value === null) return "null"
     if (value instanceof Array) return "array"
     if (value instanceof RegExp) return "regex"
     return typeof value
@@ -68,14 +69,14 @@ function checkArray(array1, array2, currentPath) {
 
 function checkComplexObject(object, something, currentPath) {
     if (object.$in) {
-        if (object.$in.indexOf(something) === -1)
+        if (!isStringIn(something, object.$in))
             return newError(object.$in, something, "$in", currentPath)
 
         return
     }
 
     if (object.$exclude) {
-        if (object.$exclude.indexOf(something) > -1)
+        if (isStringIn(something, object.$exclude))
             return newError(object.$in, something, "$in", currentPath)
 
         return
@@ -85,9 +86,27 @@ function checkComplexObject(object, something, currentPath) {
         return arrayContains(something, object.$contains)
     }
 
-    return newError(object, something, currentPath)
+    if (object.$defined) {
+        if (getType(something) === "undefined" || getType(something) === "null") {
+            return newError(object, something, "undefined key", currentPath)
+        }
+
+        return
+    }
+
+    return newError(object, something, "", currentPath)
 }
 
+function isStringIn(string, array) {
+    return some(array,
+        value => {
+            if (getType(value) == "regex") {
+                return value.test(string)
+            }
+            return value == string
+        }
+    )
+}
 function arrayContains(array, array2, currentPath) {
 
     if (getType(array2) != "array")
